@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="开启抢红包平台">
+
+        <edu.sysu.wechatluckymoney.CustomSwitchPreference
+            android:defaultValue="true"
+            android:title="微信"
+            android:icon="@drawable/wechat_ic"
+            android:key="PREFERENCE_KEY_ENABLE_ACCESSIBILITY"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="抢红包设置">
+        <EditTextPreference
+            android:title="拆红包延迟"
+            android:defaultValue="0"
+            android:key="PREFERENCE_KEY_DELAY_TIME"
+            android:inputType="number"
+            android:dialogTitle="设置延迟时间(毫秒)"
+            android:hint="单位毫秒(1秒=1000毫秒)"/>
+    </PreferenceCategory>
+</PreferenceScreen>
