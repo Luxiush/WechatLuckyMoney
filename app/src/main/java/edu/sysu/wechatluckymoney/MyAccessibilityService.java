@@ -185,6 +185,7 @@ public class MyAccessibilityService extends AccessibilityService {
             }
             else{
                 packageStage = PACKAGE_STAGE_WAIT;
+                AccessibilityHelper.performHome(this);
             }
             windowState = WINDOW_STATE_OTHER;//避免重复触发，因为一次WINDOW_STATE_CHANGE事件之后会有多个WINDOW_CONTENT_CHANGE事件
         }
@@ -194,7 +195,7 @@ public class MyAccessibilityService extends AccessibilityService {
             final AccessibilityNodeInfo open = AccessibilityHelper.findNodeInfosByClassName(rootWindow,"android.widget.Button");//開 按钮
             if(open==null){//红包已经被抢完
                 packageStage = PACKAGE_STAGE_WAIT;
-                AccessibilityHelper.performBack(this);
+                AccessibilityHelper.performHome(this);
             }
             else {
                 long delay = getConfig().getDelayTime();
@@ -212,7 +213,7 @@ public class MyAccessibilityService extends AccessibilityService {
         else if(windowState==WINDOW_STATE_DETAIL&&packageStage==PACKAGE_STAGE_OPEN){
             str.append("WINDOW_STATE_DETAIL, ");
             packageStage = PACKAGE_STAGE_WAIT;
-            AccessibilityHelper.performBack(this);
+            AccessibilityHelper.performHome(this);
         }
         else{
             str.append("WINDOW_STATE_OTHER, ");
