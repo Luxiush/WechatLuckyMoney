@@ -51,7 +51,7 @@ public final class AccessibilityHelper {
 
     /** 通过组件名字查找*/
     public static AccessibilityNodeInfo findNodeInfosByClassName(AccessibilityNodeInfo nodeInfo, String className) {
-        if(TextUtils.isEmpty(className)) {
+        if(TextUtils.isEmpty(className)||nodeInfo==null) {
             return null;
         }
         Stack<AccessibilityNodeInfo> stack = new Stack<>();
@@ -61,6 +61,7 @@ public final class AccessibilityHelper {
             temp = stack.pop();
             for(int i=temp.getChildCount()-1; i>=0; i--){
                 AccessibilityNodeInfo node = temp.getChild(i);
+                if (node==null||node.getClassName()==null) continue;
                 if(className.equals(node.getClassName())) {
                     return node;
                 }

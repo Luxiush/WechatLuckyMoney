@@ -1,6 +1,6 @@
 # 微信抢红包
-### 效果展示
-
+## 效果展示
+![](./img/demo.gif)
 ## 前言
 出于课程需要编写的一个项目。只实现了基本的抢微信红包功能。
 
@@ -20,7 +20,7 @@ Accessibility是Android的一个`辅助服务`其设计初衷是面向使用Andr
 4. 红包领取完毕，执行`GLOBAL_ACTION_BACK`返回聊天界面或者`GLOBAL_ACTION_HOME`返回桌面。
 
 ### 流程图
-![](./img/img1.png)
+![](./img/flow_chart.png)
 
 ### 设计思路  
 在以上过程中，由一个界面到下一个界面时都会先触发一个WINDOW_STATE_CHANGED事件启动新窗口，然后在加载窗口内容并触发多个WINDOW_CONTENT_CHANGED事件。因此可以在WINDOW_STATE_CHANGED的时候通过事件的className判断当前位于哪个界面，然后在WINDOW_CONTENT_CHANGED时根据当前所处的界面执行相应操作。  
@@ -80,6 +80,7 @@ switch(evenType):
 ### 技术要点 & 关键代码
 ##### 如何识别聊天界面中的红包
   通过`DDMS`工具里的`Dump View Hierarchy For UI Automator`对红包结构的分析一个红包节点下会有三个子节点: 两个TextView和一个ImageView，并且两个TextView的内容分别为`领取红包`和`微信红包`。因此可以先通过关键字`微信红包`找到相应节点然后通过判断其是否存在关键字为`领取红包`的兄弟节点来判断是否是真的红包。
+![](./img/structure_launcherui.png)  
 ```java
     private AccessibilityNodeInfo findPackage(AccessibilityNodeInfo rootNode){
         AccessibilityNodeInfo nodeInfo11, nodeInfo12, nodeInfo1;
@@ -102,6 +103,7 @@ switch(evenType):
 
 ##### 如何定位拆红包界面中的按钮
   通过分析界面结构发现`開`字被放在了按钮的背景图片中，因此无法通过关键字`開`定位到按钮。但是这个界面中只有这么一个按钮(`Button`)因此可以直接通过组件的ClassName来定位。
+![](./img/structure_luckeymoneyui.png)
 ```java 
 	final AccessibilityNodeInfo open = AccessibilityHelper.findNodeInfosByClassName(rootWindow,"android.widget.Button");//開 按钮
 	if(open==null){//红包已经被抢完
